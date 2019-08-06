@@ -27,7 +27,7 @@ const f = {
         await before(it);
       }
   
-      it.res  = await requestPromise(it.config);
+      it.res  = await f.requestPromise(it.config);
       it.time = Date.now() - it.started_at;
   
       di.writeSuccessLog(it);
@@ -124,7 +124,7 @@ const f = {
         }
       }
       else {
-        injectConfig({ service : service[api], config, excludes, root : apiPath });
+        f.injectConfig({ service : service[api], config, excludes, root : apiPath });
       }
     }
   }
