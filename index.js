@@ -130,6 +130,13 @@ const f = {
   }
 };
 
+/**
+ * @param {object} di
+ * @param {string[]} di.privateFields will be remove from config before send request
+ * @param {() => string} di.now create log time string
+ * @param {function} di.writeSuccessLog 
+ * @param {function} di.WriteErrorLog 
+ */
 function CallAPI(di) {
   di = Object.assign({
     privateFields   : ['before', 'after', 'handler', 'resPath', 'simple_data', 'user', 'params'],
@@ -145,4 +152,4 @@ function CallAPI(di) {
 }
 
 
-module.exports = { callAPI : CallAPI(), CallAPI, f };
+module.exports = { callAPI : CallAPI(), CallAPI, injectConfig : f.injectConfig };
