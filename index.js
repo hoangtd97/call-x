@@ -14,20 +14,20 @@ const f = {
       data = transform(...args);
     }
   
-    let it = { started_at: Date.now(), config : { ...config, ...data }, ...data };
+    let it = { config, data, finalConfig : { ...config, ...data }, started_at: Date.now() };
   
     if (it.params) {
-      it.config.url = f.compile(it.config.url, it.params);
+      it.finalConfig.url = f.compile(it.finalConfig.url, it.params);
     }
   
-    f.removePrivateFields(di.privateFields, it.config);
+    f.removePrivateFields(di.privateFields, it.finalConfig);
   
     try {
       if (typeof before === 'function') {
         await before(it);
       }
   
-      it.res  = await f.requestPromise(it.config);
+      it.res  = await f.requestPromise(it.finalConfig);
       it.time = Date.now() - it.started_at;
   
       di.writeSuccessLog(it);
@@ -130,13 +130,6 @@ const f = {
   }
 };
 
-/**
- * @param {object} di
- * @param {string[]} di.privateFields will be remove from config before send request
- * @param {() => string} di.now create log time string
- * @param {function} di.writeSuccessLog 
- * @param {function} di.WriteErrorLog 
- */
 function CallAPI(di) {
   di = Object.assign({
     privateFields   : ['before', 'after', 'handler', 'resPath', 'simple_data', 'user', 'params'],
@@ -151,5 +144,6 @@ function CallAPI(di) {
   }
 }
 
+const callAPI = CallAPI();
 
-module.exports = { callAPI : CallAPI(), CallAPI, injectConfig : f.injectConfig };
+module.exports = Object.assign(callAPI, { callAPI, CallAPI, injectConfig : f.injectConfig });

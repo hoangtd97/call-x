@@ -1,5 +1,7 @@
 # CALL-X
 
+An API caller.
+
 ## Usage
 
 * With that full request config :
@@ -13,16 +15,16 @@ let config = {
 }
 ```
 
-* can be split to 2 part :
+* can be split into 2 part :
   *  the static config 
   ```js
   let ORDER_SERVICE = {
-  UPDATE : {
-    method  : 'PUT',
-    baseUrl : 'https://store.com',
-    url     : 'order/{id}',
-    json    : true
-  }
+    UPDATE : {
+      method  : 'PUT',
+      baseUrl : 'https://store.com',
+      url     : 'order/{id}',
+      json    : true
+    }
   };
   ```
 
@@ -50,7 +52,7 @@ res = { id : 1000, tags : ['?'] }
 
 * or set transform() to provide nicer interface
 ```js
-ORDER_SERVICE.UPDATE.transform = (order) => Object({ params : { id : order.id }, body : order });
+ORDER_SERVICE.UPDATE.transform = (order) => ({ params : { id : order.id }, body : order });
 
 let order = { id : 1000, tags : ['?'] };
 let res   = await callAPI(ORDER_SERVICE.UPDATE, order);
@@ -69,21 +71,11 @@ ORDER_SERVICE.UPDATE.before = it => {
 }
 ```
 
-  * Add user to transform params
-  ```js
-  ORDER_SERVICE.UPDATE.transform = (order, user) => Object({ params : { id : order.id }, body : order, user });
-  ```
-
-  * and you can call
-  ```js
-  let res = await callAPI(ORDER_SERVICE.UPDATE, { id : 1000, tags : ['?'] }, user);
-  ```
-
 * Using handler to adapting error
 ```js
 ORDER_SERVICE.UPDATE.handler = it => {
    if (it.error.response.statusCode >= 400 && it.error.response.statusCode < 500) {
-     throw new ERR_INVALID_DATA({ message : it.it.error.response.body.message });
+     throw new ERR_INVALID_DATA({ message : it.error.response.body.message });
    }
    else {
      throw new ERR_SERVICE_FAILED({ error : it.error });
@@ -91,13 +83,13 @@ ORDER_SERVICE.UPDATE.handler = it => {
 }
 ```
 
-## The suggested configuration
+## Suggested configuration
 
 Almost API use some same config like baseUrl, json, hooks, so detach them and then inject to all.
 
 * `api/order-service.js`
 ```js
-const { injectConfig } = require('call-x/util');
+const { injectConfig } = require('call-x');
 
 const baseUrl = 'https://store.com';
 
@@ -181,10 +173,13 @@ async function updateOrder(user, order_id, data) {
 
 ## API
 
+---------------------
+
 <a id="callAPI"></a>
 
+## callAPI(config, data) ⇒ <code>Promise.&lt;\*&gt;</code>
 ## callAPI(config, [...args]) ⇒ <code>Promise.&lt;\*&gt;</code>
-Call API, design to use pre-configure api
+Call API
 
 **Returns**: <code>Promise.&lt;\*&gt;</code> - [http response](https://nodejs.org/api/http.html#http_class_http_serverresponse)  
 **Note**: wrap [request](https://www.npmjs.com/package/request) package  
@@ -192,11 +187,11 @@ Call API, design to use pre-configure api
 | Param | Type | Description |
 | --- | --- | --- |
 | config | <code>StaticConfig</code> | static [request config](https://www.npmjs.com/package/request#requestoptions-callback) |
-| [...args] | <code>DynamicConfig</code> \| <code>any</code> | dynamic config data or list arguments pass to config.transform() |
+| [...args] | <code>DynamicData</code> \| <code>any[]</code> | dynamic data or list arguments pass to config.transform() |
 
-<a name="AgentConfig"></a>
+<a id="StaticConfig"></a>
 
-## AgentConfig : <code>Object.&lt;string, any&gt;</code>
+## <I> StaticConfig : <code>Object.&lt;string, any&gt;</code>
 
 **Properties**
 
@@ -212,8 +207,9 @@ Call API, design to use pre-configure api
 | qs | <code>object</code> | query object |
 | body | <code>object</code> |  |
 | url | <code>string</code> |  |
+| ... | | see [request config](https://www.npmjs.com/package/request#requestoptions-callback) |
 
-<a name="It"></a>
+<a id="It"></a>
 
 ## It : <code>Object.&lt;string, any&gt;</code>
 The API calling context
@@ -223,10 +219,10 @@ The API calling context
 | Name | Type | Description |
 | --- | --- | --- |
 | config | <code>StaticConfig</code> | static api config |
-| data | <code>DynamicConfig</code> | dynamic api config data |
-| agentConfig | [<code>AgentConfig</code>](#AgentConfig) | final config pass to agent |
-| started_at | <code>number</code> | timestamp |
-| time | <code>number</code> | to finish call (ms) = Date.now() - started_at |
+| data | <code>DynamicData</code> | dynamic api config data |
+| finalConfig | [<code>FinalConfig</code>](#AgentConfig) | final config pass to requester |
+| startedAt | <code>number</code> | timestamp |
+| time | <code>number</code> | (ms) from startedAt to finish or fail |
 | res | <code>Response</code> \| <code>null</code> | response, when success |
 | error | <code>object</code> \| <code>null</code> | when failed |
 
