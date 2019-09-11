@@ -17,7 +17,7 @@ const f = {
     let it = { config, data, finalConfig : { ...config, ...data }, started_at: Date.now() };
   
     if (it.params) {
-      it.finalConfig.url = f.compile(it.finalConfig.url, it.params);
+      it.finalConfig.url = di.compile(it.finalConfig.url, it.params);
     }
   
     f.removePrivateFields(di.privateFields, it.finalConfig);
@@ -134,6 +134,7 @@ function CallAPI(di) {
   di = Object.assign({
     privateFields   : ['before', 'after', 'handler', 'resPath', 'simple_data', 'user', 'params'],
     now             : f.now,
+    compile         : f.compile,
   }, di);
 
   di.writeSuccessLog = di.writeSuccessLog || f.WriteSuccessLog(di.now);
@@ -146,4 +147,4 @@ function CallAPI(di) {
 
 const callAPI = CallAPI();
 
-module.exports = Object.assign(callAPI, { callAPI, CallAPI, injectConfig : f.injectConfig });
+module.exports = Object.assign(callAPI, { callAPI, CallAPI, injectConfig : f.injectConfig, f });

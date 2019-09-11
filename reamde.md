@@ -195,19 +195,19 @@ Call API
 
 **Properties**
 
-| Name | Type | Description |
-| --- | --- | --- |
-| url | <code>string</code> | template with params enclosed in bracket {}, ex : order/{id} |
-| resPath | <code>string</code> | the path of data will be get from response |
-| transform | <code>function</code> |  |
-| before | <code>function</code> |  |
-| after | <code>function</code> |  |
-| handler | <code>function</code> |  |
-| params | <code>object</code> | url params, used to compile url template |
-| qs | <code>object</code> | query object |
-| body | <code>object</code> |  |
-| url | <code>string</code> |  |
-| ... | | see [request config](https://www.npmjs.com/package/request#requestoptions-callback) |
+| Name      | Type                  | Description |
+| ---       | ---                   | --- |
+| url       | <code>string</code>   | template with params enclosed in bracket {}, ex : order/{id} |
+| resPath   | <code>string</code>   | the path of data will be get from response |
+| transform | <code>function</code> | |
+| before    | <code>function</code> | |
+| after     | <code>function</code> | |
+| handler   | <code>function</code> | |
+| params    | <code>object</code>   | url params, used to compile url template |
+| qs        | <code>object</code>   | query object |
+| body      | <code>object</code>   | |
+| url       | <code>string</code>   | |
+| ...       |                       | see [request config](https://www.npmjs.com/package/request#requestoptions-callback) |
 
 <a id="It"></a>
 
@@ -216,13 +216,13 @@ The API calling context
 
 **Properties**
 
-| Name | Type | Description |
-| --- | --- | --- |
-| config | <code>StaticConfig</code> | static api config |
-| data | <code>DynamicData</code> | dynamic api config data |
-| finalConfig | [<code>FinalConfig</code>](#AgentConfig) | final config pass to requester |
-| startedAt | <code>number</code> | timestamp |
-| time | <code>number</code> | (ms) from startedAt to finish or fail |
-| res | <code>Response</code> \| <code>null</code> | response, when success |
-| error | <code>object</code> \| <code>null</code> | when failed |
+| Name        | Type                                     | Description                           |
+| ---         | ---                                      | ---                                   |
+| config      | <code>StaticConfig</code>                | static api config                     |
+| data        | <code>DynamicData</code>                 | dynamic api config data               |
+| finalConfig | [<code>FinalConfig</code>](#AgentConfig) | final config pass to requester        |
+| startedAt   | <code>number</code>                      | timestamp                             |
+| time        | <code>number</code>                      | (ms) from startedAt to finish or fail |
+| res         | <code>Response</code> \                  | <code>null</code>                     | response, when success |
+| error       | <code>object</code> \                    | <code>null</code>                     | when failed |
 

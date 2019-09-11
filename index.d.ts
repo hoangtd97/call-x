@@ -53,6 +53,15 @@ export interface CallApiDependencies {
   writeErrorLog   ?: (it : It) => void;
   /** create time log string */
   now             ?: () => string;
+  /** 
+   * Function will be used to compile url template to url.
+   * Default, replace pattern `/{field}/g` with params[field].
+   * @example
+   * compile('abc.com/order/{id}', { id : 1000 });
+   * 
+   * => 'abc.com/order/1000'
+   * */
+  compile         ?: (urlTemplate : string, params : object) => string;
 }
 
 export interface InjectConfigOptions {
