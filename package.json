@@ -1,7 +1,7 @@
 {
   "name": "call-x",
   "description": "API caller",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "index.js",
   "repository": "git+https://github.com/hoangtd97/call-x.git",
   "author": "Tran Dinh Hoang",
