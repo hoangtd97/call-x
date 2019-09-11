@@ -16,8 +16,8 @@ const f = {
   
     let it = { config, data, finalConfig : { ...config, ...data }, started_at: Date.now() };
   
-    if (it.params) {
-      it.finalConfig.url = di.compile(it.finalConfig.url, it.params);
+    if (it.data.params) {
+      it.finalConfig.url = di.compile(it.finalConfig.url, it.data.params);
     }
   
     f.removePrivateFields(di.privateFields, it.finalConfig);
