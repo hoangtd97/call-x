@@ -31,6 +31,8 @@ export interface StaticConfig extends FinalConfig {
 export interface DynamicData extends FinalConfig {
   /** url params, used to compile url template  */
   params    ?: object;
+  qs        ?: object;
+  body      ?: any;
 }
 
 export interface It {

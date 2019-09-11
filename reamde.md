@@ -203,10 +203,17 @@ Call API
 | before    | <code>function</code> | |
 | after     | <code>function</code> | |
 | handler   | <code>function</code> | |
+| ...       |                       | see [request config](https://www.npmjs.com/package/request#requestoptions-callback) |
+
+## <I> DynamicData : <code>Object.&lt;string, any&gt;</code>
+
+**Properties**
+
+| Name      | Type                  | Description |
+| ---       | ---                   | --- |
 | params    | <code>object</code>   | url params, used to compile url template |
 | qs        | <code>object</code>   | query object |
 | body      | <code>object</code>   | |
-| url       | <code>string</code>   | |
 | ...       |                       | see [request config](https://www.npmjs.com/package/request#requestoptions-callback) |
 
 <a id="It"></a>
